@@ -72,6 +72,15 @@ public class Inimigo {
         return chefeFinal;
     }
 
+    //chance de bloqueio inimigo
+    public boolean tentarBloqueio() {
+        Random random = new Random();
+        int chance = random.nextInt(100);
+        int chanceBloqueio = this.defesa * 2;
+        return chance < chanceBloqueio;
+    }
+
+
     // Metodo de ataque do inimigo
     public void atacar(Heroi heroi) {
         Random random = new Random();

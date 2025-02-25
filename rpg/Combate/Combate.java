@@ -68,11 +68,15 @@ public class Combate {
                 }
 
                 case 3 -> { // Usar Habilidade
-                    System.out.println("Escolha uma habilidade:");
                     heroi.mostrarHabilidades();
-                    int indiceHabilidade = scanner.nextInt();
-                    heroi.usarHabilidade(indiceHabilidade, inimigo);
+                    if (!heroi.getHabilidades().isEmpty()) {
+                        int indiceHabilidade = scanner.nextInt();
+                        heroi.usarHabilidade(indiceHabilidade, inimigo);
+                    } else {
+                        System.out.println("Você não possui habilidades para usar!");
+                    }
                 }
+
 
                 case 4 -> { // Fugir
                     if (inimigo instanceof Mimico) {

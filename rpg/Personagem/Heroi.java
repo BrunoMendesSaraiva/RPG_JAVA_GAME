@@ -7,6 +7,7 @@ import rpg.Personagem.Inimigos.Inimigo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Heroi extends PersonagemBase {
     private final List<ItemBase> cinto = new ArrayList<>();
@@ -134,12 +135,17 @@ public class Heroi extends PersonagemBase {
 
     public void mostrarHabilidades() {
         System.out.println("===== H A B I L I D A D E S =====");
-        for (int i = 0; i < habilidades.size(); i++) {
-            Habilidade habilidade = habilidades.get(i);
-            System.out.println(i + ". " + habilidade.getNome() + " - " + habilidade.getDescricao());
+        if (habilidades.isEmpty()) {
+            System.out.println("Você não possui habilidades.");
+        } else {
+            for (int i = 0; i < habilidades.size(); i++) {
+                Habilidade habilidade = habilidades.get(i);
+                System.out.println(i + ". " + habilidade.getNome() + " - " + habilidade.getDescricao());
+            }
         }
         System.out.println("=================================");
     }
+
 
     public void usarHabilidade(int indice, Inimigo inimigo) {
         if (indice < 0 || indice >= habilidades.size()) {
@@ -151,10 +157,11 @@ public class Heroi extends PersonagemBase {
         habilidade.usarHabilidade(inimigo);
     }
 
+    // Retorna a lista de habilidades do herói
+    public List<Habilidade> getHabilidades() {
+        return habilidades;
+    }
 
-    // ===============================
-    // GETTERS e SETTERS
-    // ===============================
     // ===============================
     // GETTERS e SETTERS
     // ===============================
@@ -218,6 +225,14 @@ public class Heroi extends PersonagemBase {
         this.chanceEsquiva = chanceEsquiva;
     }
 
+
+    // Calcular a chance de bloqueio
+    public boolean tentarBloqueio() {
+        Random random = new Random();
+        int chance = random.nextInt(100);
+        int chanceBloqueio = this.defesa * 2; // Fator de bloqueio: 2%
+        return chance < chanceBloqueio;
+    }
 
     // ===============================
     // METODO PARA MOSTRAR STATUS
