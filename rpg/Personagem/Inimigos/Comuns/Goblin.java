@@ -4,6 +4,6 @@ import rpg.Personagem.Inimigos.Inimigo;
 
 public class Goblin extends Inimigo {
     public Goblin() {
-        super("Goblin", 30, 7, 2);
+        super("Goblin", 30, 7, 2,20);
     }
 }

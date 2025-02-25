@@ -1,13 +1,17 @@
 package rpg.Combate;
 
+import java.util.Random;
 import java.util.Scanner;
 import rpg.Personagem.Heroi;
 import rpg.Personagem.Inimigos.Inimigo;
 import rpg.Personagem.Inimigos.Especiais.Mimico;
+import rpg.Personagem.Inimigos.Bosses.*;
 
 public class Combate {
+
     public static void iniciarCombate(Heroi heroi, Inimigo inimigo) {
         Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
         System.out.println("===== INÍCIO DO COMBATE =====");
         System.out.println(inimigo.getNome() + " está pronto para lutar!");
@@ -29,7 +33,7 @@ public class Combate {
             int escolha = scanner.nextInt();
 
             switch (escolha) {
-                case 1 -> { // Atacar
+                case 1 -> {
                     System.out.println("Escolher do Cinto (C) ou da Mochila (M)?");
                     String origem = scanner.next().toUpperCase();
 
@@ -37,18 +41,31 @@ public class Combate {
                         System.out.println("Escolha uma arma do cinto:");
                         heroi.mostrarCinto();
                         int indice = scanner.nextInt();
-                        heroi.usarItemCinto(indice, inimigo);
+
+                        // Cálculo de esquiva do inimigo
+                        int chanceEsquiva = random.nextInt(100);
+                        if (chanceEsquiva < inimigo.getChanceEsquiva()) {
+                            System.out.println(inimigo.getNome() + " esquivou do seu ataque!");
+                        } else {
+                            heroi.usarItemCinto(indice, inimigo);
+                        }
                     } else if (origem.equals("M")) {
                         System.out.println("Escolha uma arma da mochila:");
                         heroi.mostrarMochila();
                         int indice = scanner.nextInt();
-                        heroi.usarItemMochila(indice, inimigo);
+
+                        int chanceEsquiva = random.nextInt(100);
+                        if (chanceEsquiva < inimigo.getChanceEsquiva()) {
+                            System.out.println(inimigo.getNome() + " esquivou do seu ataque!");
+                        } else {
+                            heroi.usarItemMochila(indice, inimigo);
+                        }
                     } else {
                         System.out.println("Escolha inválida! Você perdeu a vez.");
                     }
                 }
 
-                case 2 -> { // Usar Poção
+                case 2 -> {
                     System.out.println("Escolher do Cinto (C) ou da Mochila (M)?");
                     String origem = scanner.next().toUpperCase();
 
@@ -67,7 +84,7 @@ public class Combate {
                     }
                 }
 
-                case 3 -> { // Usar Habilidade
+                case 3 -> {
                     heroi.mostrarHabilidades();
                     if (!heroi.getHabilidades().isEmpty()) {
                         int indiceHabilidade = scanner.nextInt();
@@ -77,13 +94,12 @@ public class Combate {
                     }
                 }
 
-
-                case 4 -> { // Fugir
+                case 4 -> {
                     if (inimigo instanceof Mimico) {
                         System.out.println("Você não pode fugir de um Mímico!");
                     } else {
                         System.out.println("Você fugiu da batalha!");
-                        return;
+                        exibirCreditos();
                     }
                 }
 
@@ -93,21 +109,50 @@ public class Combate {
             // Turno do Inimigo
             if (inimigo.getVida() > 0) {
                 System.out.println("\n===== TURNO DO INIMIGO =====");
-                inimigo.atacar(heroi);
+
+                // Cálculo de esquiva do herói
+                int chanceEsquiva = random.nextInt(100);
+                if (chanceEsquiva < heroi.getChanceEsquiva()) {
+                    System.out.println("Você esquivou do ataque do " + inimigo.getNome() + "!");
+                } else {
+                    inimigo.atacar(heroi);
+                }
+
                 System.out.println("Sua vida: " + heroi.getVida());
             }
 
             // Verificar o estado do combate
             if (heroi.getVida() <= 0) {
                 System.out.println("Você foi derrotado!");
-                return;
+
+                // Se for um Boss, mostrar mensagem de derrota final
+                if (inimigo instanceof DarkKnight || inimigo instanceof Dragao || inimigo instanceof LichKing ||
+                        inimigo instanceof LordeMorcego || inimigo instanceof ReiEsqueleto || inimigo instanceof SlimeGigante) {
+                    System.out.println("O mundo foi dominado pela escuridão...");
+                }
+                exibirCreditos();
             }
+
             if (inimigo.getVida() <= 0) {
                 System.out.println("Você derrotou o " + inimigo.getNome() + " e recebeu " + inimigo.getMoedas() + " moedas!");
                 heroi.setMoedasTotais(heroi.getMoedasTotais() + inimigo.getMoedas());
-                return;
+
+                // Se for um Boss, finalizar o jogo com vitória
+                if (inimigo instanceof DarkKnight || inimigo instanceof Dragao || inimigo instanceof LichKing ||
+                        inimigo instanceof LordeMorcego || inimigo instanceof ReiEsqueleto || inimigo instanceof SlimeGigante) {
+                    System.out.println("\n===== PARABÉNS! VOCÊ DERROTOU O BOSS! =====");
+                    exibirCreditos();
+                }
             }
         }
-        System.out.println("===== FIM DO COMBATE =====");
+    }
+
+    private static void exibirCreditos() {
+        System.out.println("\n===== FIM DO JOGO =====");
+        System.out.println("Obrigado por jogar!");
+        System.out.println("Bruno \"Nancom\" Saraiva");
+        System.out.println("Gabriel \"Schutz\" Schutz");
+        System.out.println("Paulo \"Petruz\" Petruz");
+        System.exit(0);  // Finaliza o programa
     }
 }

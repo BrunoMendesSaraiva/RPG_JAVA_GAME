@@ -7,12 +7,11 @@ public abstract class PersonagemBase {
     protected int ataque;
     protected int defesa;
 
-    public PersonagemBase(String nome, int vida, int ataque, int defesa) {
+    public PersonagemBase(String nome, int vida, int ataque) {
         this.nome = nome;
         this.vida = vida;
         this.maxVida = vida;
         this.ataque = ataque;
-        this.defesa = defesa;
     }
 
     // ===============================

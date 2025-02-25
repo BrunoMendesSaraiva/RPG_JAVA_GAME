@@ -152,7 +152,7 @@ public class PersonalizacaoPersonagem {
 
         if (confirmar == 'S') {
             // Criação do herói com base nas escolhas
-            Heroi heroi = new Heroi(nomeHeroi, raca, classe, bonusVida, bonusAtaque, bonusDefesa, 0);
+            Heroi heroi = new Heroi(nomeHeroi, raca, classe, bonusVida, bonusAtaque, 0);
             System.out.println("\nVocê criou um(a) " + raca + " " + classe + " chamado(a) " + heroi.getNome());
             return heroi;
         } else {

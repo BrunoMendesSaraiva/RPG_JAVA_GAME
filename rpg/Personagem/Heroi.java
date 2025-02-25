@@ -27,13 +27,13 @@ public class Heroi extends PersonagemBase {
 
 
 
-    Heroi(String nome, String raca, String classe, int vida, int ataque, int defesa, int moedasTotais) {
-        super(nome, vida, ataque, defesa);
+    Heroi(String nome, String raca, String classe, int vida, int ataque, int moedasTotais) {
+        super(nome, vida, ataque);
         this.raca = raca;
         this.classe = classe;
         this.vitalidade = vida;
         this.moedasTotais = moedasTotais;
-        cinto.add(new ArmaBase("Espada de Madeira", 5)); // Arma inicial
+        cinto.add(new ArmaBase("Espada de Madeira", 6)); // Arma inicial, não precisa de classe adicional
     }
 
     // Método para obter a instância do Singleton
@@ -45,9 +45,9 @@ public class Heroi extends PersonagemBase {
     }
 
     // Método para inicializar o Singleton
-    public static void inicializarHeroi(String nome, String raca, String classe, int vida, int ataque, int defesa, int moedasTotais) {
+    public static void inicializarHeroi(String nome, String raca, String classe, int vida, int ataque, int moedasTotais) {
         if (instancia == null) {
-            instancia = new Heroi(nome, raca, classe, vida, ataque, defesa, moedasTotais);
+            instancia = new Heroi(nome, raca, classe, vida, ataque, moedasTotais);
         } else {
             System.out.println("O herói já foi criado.");
         }
@@ -193,10 +193,6 @@ public class Heroi extends PersonagemBase {
         return this.ataque;
     }
 
-    public int getDefesa() {
-        return this.defesa;
-    }
-
     public int getMoedasTotais() {
         return moedasTotais;
     }
@@ -244,7 +240,6 @@ public class Heroi extends PersonagemBase {
         System.out.println("Classe: " + this.getClasse());
         System.out.println("Vida: " + this.getVida() + "/" + maxVida);
         System.out.println("Ataque: " + this.getAtaque());
-        System.out.println("Defesa: " + this.getDefesa());
         System.out.println("Vitalidade: " + this.getVitalidade());
         System.out.println("Força: " + this.getForca());
         System.out.println("Agilidade: " + this.getAgilidade());

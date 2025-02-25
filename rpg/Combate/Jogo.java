@@ -65,7 +65,6 @@ public class Jogo {
         String raca = "";
         int bonusVida = 0;
         int bonusAtaque = 0;
-        int bonusDefesa = 0;
         escolhaValida = false;
 
         do {
@@ -83,28 +82,24 @@ public class Jogo {
                         raca = "Humano";
                         bonusVida = 10;
                         bonusAtaque = 10;
-                        bonusDefesa = 10;
                         escolhaValida = true;
                     }
                     case 2 -> {
                         raca = "Elfo";
                         bonusVida = 0;
                         bonusAtaque = 15;
-                        bonusDefesa = 5;
                         escolhaValida = true;
                     }
                     case 3 -> {
                         raca = "Anão";
                         bonusVida = 20;
                         bonusAtaque = 5;
-                        bonusDefesa = 15;
                         escolhaValida = true;
                     }
                     case 4 -> {
                         raca = "Orc";
                         bonusVida = 15;
                         bonusAtaque = 15;
-                        bonusDefesa = 0;
                         escolhaValida = true;
                     }
                     default -> System.out.println("Escolha inválida! Tente novamente.");
@@ -176,7 +171,6 @@ public class Jogo {
             System.out.println("Classe: " + classe);
             System.out.println("Vida: " + (vidaBase + bonusVida));
             System.out.println("Ataque: " + (ataqueBase + bonusAtaque));
-            System.out.println("Defesa: " + (defesaBase + bonusDefesa));
             System.out.println("\nConfirma as escolhas? (S/N)");
             confirmar = scanner.nextLine().toUpperCase();
         } while (!confirmar.equals("S") && !confirmar.equals("N"));
@@ -188,7 +182,6 @@ public class Jogo {
                     classe,
                     vidaBase + bonusVida,
                     ataqueBase + bonusAtaque,
-                    defesaBase + bonusDefesa,
                     0
             );
 

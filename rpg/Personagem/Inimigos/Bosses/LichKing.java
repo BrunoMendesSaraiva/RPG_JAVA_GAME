@@ -4,6 +4,6 @@ import rpg.Personagem.Inimigos.Inimigo;
 
 public class LichKing extends Inimigo {
     public LichKing() {
-        super("Lich King", 160, 30, 12);
+        super("Lich King", 160, 30, 12,25);
     }
 }

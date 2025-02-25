@@ -1,49 +1,36 @@
 package rpg.Personagem.Inimigos;
 
 import rpg.Personagem.Heroi;
-
 import java.util.Random;
-
 
 public class Inimigo {
     protected String nome;
     protected int vida;
     protected int ataque;
-    protected int defesa;
-    protected boolean chefeFinal;
     protected int moedas;
+    private int chanceEsquiva;
 
-    // Construtor para inimigos comuns (sem defesa)
-    public Inimigo(String nome, int vida, int ataque, int moedas) {
+    // Construtor para inimigos comuns (com chance de esquiva)
+    public Inimigo(String nome, int vida, int ataque, int moedas, int chanceEsquiva) {
         this.nome = nome;
         this.vida = vida;
         this.ataque = ataque;
         this.moedas = moedas;
-        this.defesa = 0;
-        this.chefeFinal = false;
+        this.chanceEsquiva = chanceEsquiva;
     }
 
-    // Construtor para inimigos com defesa
-    public Inimigo(String nome, int vida, int ataque, int defesa, int moedas) {
+    // Construtor para chefes finais (chance de esquiva personalizada)
+    public Inimigo(String nome, int vida, int ataque, boolean chefeFinal, int moedas, int chanceEsquiva) {
         this.nome = nome;
         this.vida = vida;
         this.ataque = ataque;
         this.moedas = moedas;
-        this.defesa = defesa;
-        this.chefeFinal = false;
+        this.chanceEsquiva = chanceEsquiva;
     }
 
-    // Construtor para chefes finais
-    public Inimigo(String nome, int vida, int ataque, int defesa, boolean chefeFinal, int moedas) {
-        this.nome = nome;
-        this.vida = vida;
-        this.ataque = ataque;
-        this.moedas = moedas;
-        this.defesa = defesa;
-        this.chefeFinal = chefeFinal;
-    }
-
-    // Métodos Getters e Setters
+    // ===============================
+    // Getters e Setters
+    // ===============================
     public String getNome() {
         return nome;
     }
@@ -64,72 +51,74 @@ public class Inimigo {
         return moedas;
     }
 
-    public int getDefesa() {
-        return defesa;
+    public int getChanceEsquiva() {
+        return chanceEsquiva;
     }
 
-    public boolean isChefeFinal() {
-        return chefeFinal;
+    public void setChanceEsquiva(int chanceEsquiva) {
+        this.chanceEsquiva = chanceEsquiva;
     }
 
-    //chance de bloqueio inimigo
-    public boolean tentarBloqueio() {
-        Random random = new Random();
-        int chance = random.nextInt(100);
-        int chanceBloqueio = this.defesa * 2;
-        return chance < chanceBloqueio;
-    }
-
-
-    // Metodo de ataque do inimigo
+    // ===============================
+    // Método de ataque do inimigo
+    // ===============================
     public void atacar(Heroi heroi) {
         Random random = new Random();
         int chance = random.nextInt(100);
 
-        // Verifica a chance de esquiva
+        // Verifica a chance de esquiva do herói
         if (chance < heroi.getChanceEsquiva()) {
             System.out.println(heroi.getNome() + " esquivou do ataque com Agilidade Sobrenatural!");
             heroi.setChanceEsquiva(0); // Reseta a esquiva após o uso
             return;
         }
 
-        int dano = this.getAtaque() - heroi.getDefesa();
-        if (dano > 0) {
-            heroi.receberDano(dano);
-            System.out.println(this.getNome() + " atacou " + heroi.getNome() + " causando " + dano + " de dano.");
-        } else {
-            System.out.println(heroi.getNome() + " bloqueou o ataque de " + this.getNome() + "!");
-        }
+        // Aplica o dano diretamente
+        heroi.receberDano(this.getAtaque());
+        System.out.println(this.getNome() + " atacou " + heroi.getNome() + " causando " + this.getAtaque() + " de dano.");
     }
 
+    // ===============================
+    // Método para receber dano
+    // ===============================
+    public void receberDano(int dano) {
+        Random random = new Random();
+        int chance = random.nextInt(100);
 
-    // Metodo para mostrar o status do inimigo
+        // Verifica a chance de esquiva do inimigo
+        if (chance < this.chanceEsquiva) {
+            System.out.println(this.getNome() + " esquivou do ataque!");
+        } else {
+            this.vida -= dano;
+            System.out.println(this.getNome() + " recebeu " + dano + " de dano.");
+        }
+
+        if (vida < 0) vida = 0;
+    }
+
+    // ===============================
+    // Método para mostrar o status do inimigo
+    // ===============================
     public void mostrarStatus() {
         System.out.println("===== STATUS DO INIMIGO =====");
         System.out.println("Nome: " + nome);
         System.out.println("Vida: " + vida);
         System.out.println("Ataque: " + ataque);
-        System.out.println("Defesa: " + defesa);
-        if (chefeFinal) {
-            System.out.println("Este é um CHEFE FINAL!");
-        }
+        System.out.println("Chance de Esquiva: " + chanceEsquiva + "%");
         System.out.println("=============================");
     }
 
-    // Metodo para verificar se o inimigo foi derrotado
+    // ===============================
+    // Metodo para verificar se o inimigo foi derrotado    NÂO MEXE SCHUTZ
+    // ===============================
     public boolean isDerrotado() {
         return vida <= 0;
     }
 
-    // Metodo para ataque especial (sobrescreva em subclasses)
+    // ===============================
+    // Método para ataque especial (sobrescreva em subclasses)
+    // ===============================
     public void ataqueEspecial(Heroi heroi) {
         System.out.println(nome + " está preparando um ataque especial...");
-    }
-
-    //Metodo para receber dano (Usado por ArmaBase)
-    public void receberDano(int dano) {
-        int danoRecebido = dano - this.defesa;
-        if (danoRecebido < 0) danoRecebido = 0;
-        this.vida -= danoRecebido;
     }
 }

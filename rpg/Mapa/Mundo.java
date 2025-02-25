@@ -3,7 +3,7 @@ package rpg.Mapa;
 import java.util.Random;
 import java.util.Scanner;
 import rpg.Personagem.Heroi;
-import rpg.Eventos.Eventos;
+
 
 public class Mundo {
     private Mapa mapa;
@@ -43,10 +43,23 @@ public class Mundo {
                 case "5" -> heroi.mostrarStatus();
                 case "6" -> {
                     System.out.println("Você encerrou a exploração.");
+                    exibirCreditos();
                     explorando = false;
                 }
-                default -> System.out.println("Escolha inválida! Use WASD ou números de 1 a 6.");
+                default -> {
+                    System.out.println("Escolha inválida! Use WASD ou números de 1 a 6.");
+                    scanner.nextLine();
+                }
             }
         }
+    }
+
+    private void exibirCreditos() {
+        System.out.println("\n===== FIM DO JOGO =====");
+        System.out.println("Obrigado por jogar!");
+        System.out.println("Bruno \"Nancom\" Saraiva");
+        System.out.println("Gabriel \"Schutz\" Schutz");
+        System.out.println("Paulo \"Petruz\" Petruz");
+        System.exit(0);
     }
 }

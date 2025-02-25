@@ -4,6 +4,6 @@ import rpg.Personagem.Inimigos.Inimigo;
 
 public class SlimeGigante extends Inimigo {
     public SlimeGigante() {
-        super("Slime Gigante", 100, 22, 7);
+        super("Slime Gigante", 100, 22, 7,30);
     }
 }

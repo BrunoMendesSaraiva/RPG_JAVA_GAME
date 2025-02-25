@@ -5,6 +5,8 @@ import rpg.Combate.Combate;
 import rpg.Item.ItemBase;
 import java.util.Scanner;
 import rpg.Arma.*;
+import rpg.Item.ItemCura;
+import rpg.Item.ItemDano;
 import rpg.Personagem.Inimigos.Especiais.Mimico;
 import java.util.Random;
 import rpg.Personagem.Inimigos.Inimigo;
@@ -203,6 +205,18 @@ public class Eventos {
     // METODO AUXILIAR: Adicionar ao Inventário
     // ===============================
     private static void adicionarAoInventario(Heroi heroi, ItemBase item) {
+        // Verifica se é um item de dano (Arma) ou de cura (Poção)
+        if (item instanceof ItemDano) {
+            int poderAtaque = ((ItemDano) item).getPoderAtaque();
+            System.out.println(item.getNome() + " foi encontrada com " + poderAtaque + " de dano!");
+        } else if (item instanceof ItemCura) {
+            int poderCura = ((ItemCura) item).getPoderCura();
+            System.out.println(item.getNome() + " foi encontrada com " + poderCura + " de cura!");
+        } else {
+            System.out.println(item.getNome() + " foi encontrada.");
+        }
+
+        // Pergunta onde o jogador quer guardar o item
         System.out.println("Deseja guardar na Mochila (M) ou no Cinto (C)?");
         String escolha = scanner.nextLine().toUpperCase();
         if (escolha.equals("M")) {

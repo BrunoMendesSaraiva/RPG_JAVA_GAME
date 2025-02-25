@@ -7,7 +7,7 @@ public class Mimico extends Inimigo {
 
     // Construtor do Mímico
     public Mimico() {
-        super("Mimico", 70, 18, 5);
+        super("Mimico", 70, 18, 5,15);
     }
 
     @Override
