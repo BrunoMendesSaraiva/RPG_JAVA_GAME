@@ -60,7 +60,7 @@ public class Inimigo {
     }
 
     // ===============================
-    // Método de ataque do inimigo
+    // Metodo de ataque do inimigo
     // ===============================
     public void atacar(Heroi heroi) {
         Random random = new Random();
@@ -79,7 +79,7 @@ public class Inimigo {
     }
 
     // ===============================
-    // Método para receber dano
+    // Metodo para receber dano
     // ===============================
     public void receberDano(int dano) {
         Random random = new Random();
@@ -97,7 +97,7 @@ public class Inimigo {
     }
 
     // ===============================
-    // Método para mostrar o status do inimigo
+    // Metodo para mostrar o status do inimigo
     // ===============================
     public void mostrarStatus() {
         System.out.println("===== STATUS DO INIMIGO =====");
@@ -116,7 +116,7 @@ public class Inimigo {
     }
 
     // ===============================
-    // Método para ataque especial (sobrescreva em subclasses)
+    // Metodo para ataque especial (sobrescreva em subclasses)
     // ===============================
     public void ataqueEspecial(Heroi heroi) {
         System.out.println(nome + " está preparando um ataque especial...");
