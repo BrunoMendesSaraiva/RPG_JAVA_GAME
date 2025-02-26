@@ -16,7 +16,6 @@ public class Jogo {
         // Escolha do Tamanho do Mapa
         int tamanhoMapa = 5;
         boolean escolhaValida = false;
-
         do {
             System.out.println("Escolha o tamanho do mapa:");
             System.out.println("1. Pequeno (5x5)");
@@ -174,6 +173,8 @@ public class Jogo {
             System.out.println("\nConfirma as escolhas? (S/N)");
             confirmar = scanner.nextLine().toUpperCase();
         } while (!confirmar.equals("S") && !confirmar.equals("N"));
+    try{
+
 
         if (confirmar.equals("S")) {
             Heroi.inicializarHeroi(
@@ -189,9 +190,20 @@ public class Jogo {
             System.out.println("\nVocê criou um(a) " + raca + " " + classe + " chamado(a) " + jogador.getNome());
             Mundo mundo = new Mundo(tamanhoMapa);
             mundo.explorar(jogador);
-        } else {
+        } else if (confirmar.equals("N")) {
+            nomeHeroi = "";
+            raca = "";
+            classe = "";
+            vidaBase = 0;
+            bonusVida = 0;
+            ataqueBase = 0;
+            bonusAtaque = 0;
             System.out.println("Criação de personagem cancelada.");
+            iniciarJogo();
         }
+    }catch(Exception e){
+        System.out.println("Entrada inválida! Por favor, insira um número.");
+    }
 
         scanner.close();
     }

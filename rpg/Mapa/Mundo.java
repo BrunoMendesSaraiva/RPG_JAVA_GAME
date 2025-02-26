@@ -1,24 +1,20 @@
 package rpg.Mapa;
 
-import java.util.Random;
-import java.util.Scanner;
 import rpg.Personagem.Heroi;
+
+import java.io.IOException;
+import java.util.Random;
 
 
 public class Mundo {
     private Mapa mapa;
     private Random random;
-    private Scanner scanner;
 
-    // Construtor que recebe o tamanho do mapa
     public Mundo(int tamanhoMapa) {
         this.mapa = new Mapa(tamanhoMapa);
         this.random = new Random();
-        this.scanner = new Scanner(System.in);
     }
 
-    // Método principal de exploração do mundo
-    // Método principal de exploração do mundo
     public void explorar(Heroi heroi) {
         boolean explorando = true;
 
@@ -26,30 +22,32 @@ public class Mundo {
             mapa.mostrarMapa();
             System.out.println("\nVocê está em " + mapa.getPosicao());
             System.out.println("Escolha uma ação:");
-            System.out.println("1. Mover para Norte (W)");
-            System.out.println("2. Mover para Sul (S)");
-            System.out.println("3. Mover para Leste (D)");
-            System.out.println("4. Mover para Oeste (A)");
-            System.out.println("5. Ver Status Atuais");
-            System.out.println("6. Sair da exploração");
+            System.out.println("W - Mover para Norte");
+            System.out.println("S - Mover para Sul");
+            System.out.println("D - Mover para Leste");
+            System.out.println("A - Mover para Oeste");
+            System.out.println("E - Ver Status Atuais");
+            System.out.println("Q - Sair da exploração");
 
-            String escolha = scanner.next().toUpperCase(); // Aceita letras e números
+            try {
+                char escolha = (char) System.in.read();
+                System.in.skip(System.in.available()); // Limpa o buffer
 
-            switch (escolha) {
-                case "1", "W" -> mapa.moverNorte(heroi);
-                case "2", "S" -> mapa.moverSul(heroi);
-                case "3", "D" -> mapa.moverLeste(heroi);
-                case "4", "A" -> mapa.moverOeste(heroi);
-                case "5" -> heroi.mostrarStatus();
-                case "6" -> {
-                    System.out.println("Você encerrou a exploração.");
-                    exibirCreditos();
-                    explorando = false;
+                switch (Character.toUpperCase(escolha)) {
+                    case 'W' -> mapa.moverNorte(heroi);
+                    case 'S' -> mapa.moverSul(heroi);
+                    case 'D' -> mapa.moverLeste(heroi);
+                    case 'A' -> mapa.moverOeste(heroi);
+                    case 'E' -> heroi.mostrarStatus();
+                    case 'Q' -> {
+                        System.out.println("Você encerrou a exploração.");
+                        exibirCreditos();
+                        explorando = false;
+                    }
+                    default -> System.out.println("Escolha inválida! Use WASD, E ou Q.");
                 }
-                default -> {
-                    System.out.println("Escolha inválida! Use WASD ou números de 1 a 6.");
-                    scanner.nextLine();
-                }
+            } catch (IOException e) {
+                System.out.println("Erro ao ler entrada: " + e.getMessage());
             }
         }
     }

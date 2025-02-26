@@ -3,6 +3,10 @@ package rpg.Mapa;
 import java.util.Random;
 import rpg.Personagem.Heroi;
 import rpg.Eventos.Eventos;
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 
 public class Mapa {
     private String[][] mapa;
